@@ -1,7 +1,7 @@
+const BASE_API = `https://easydev.club/api/v2/todos`;
+
 export async function fetchTodos(status) {
-  const response = await fetch(
-    `https://easydev.club/api/v1/todos?filter=${status}`
-  );
+  const response = await fetch(`${BASE_API}?filter=${status}`);
   const resData = await response.json();
 
   if (!response.ok) {
@@ -12,7 +12,7 @@ export async function fetchTodos(status) {
 }
 
 export async function addTodo(title) {
-  const response = await fetch(`https://easydev.club/api/v1/todos`, {
+  const response = await fetch(BASE_API, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,18 +30,16 @@ export async function addTodo(title) {
 }
 
 export async function deleteTodo(id) {
-  await fetch(`https://easydev.club/api/v1/todos/${id}`, {
+  await fetch(`${BASE_API}/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
   });
-
-  return { id };
 }
 
 export async function updateTodo(id, updatedData) {
-  const response = await fetch(`https://easydev.club/api/v1/todos/${id}`, {
+  const response = await fetch(`${BASE_API}/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

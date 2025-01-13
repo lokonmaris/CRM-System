@@ -1,8 +1,27 @@
 import { useState } from "react";
+import { addTodo, fetchTodos } from "../../http.js";
+import styles from "./AddTodo.module.css";
 
-export default function UserInput({ onAddTodo }) {
+export default function AddTodo({
+  setTodoList,
+  setAllTodos,
+  setError,
+  status,
+}) {
   const [todoTitle, setTodoTitle] = useState("");
   const [inputError, setInputError] = useState("");
+
+  async function handleAddTodo(newTodoTitle) {
+    try {
+      await addTodo(newTodoTitle);
+      const data = await fetchTodos(status);
+      const allTasks = await fetchTodos("all");
+      setTodoList(data);
+      setAllTodos(allTasks);
+    } catch (error) {
+      setError({ message: error.message || "Не удалось добавить задачу" });
+    }
+  }
 
   const handleChange = (event) => {
     setTodoTitle(event.target.value);
@@ -21,13 +40,13 @@ export default function UserInput({ onAddTodo }) {
       setInputError("");
     }
 
-    onAddTodo(todoTitle);
+    handleAddTodo(todoTitle);
     setTodoTitle("");
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} id="input-container">
+    <div className={styles.inputContainer}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           id="userinput"
@@ -35,11 +54,11 @@ export default function UserInput({ onAddTodo }) {
           value={todoTitle}
           onChange={handleChange}
         />
-        <button type="submit" id="submit-btn">
+        <button type="submit" className={styles.submitBtn}>
           Добавить задачу
         </button>
       </form>
-      {inputError ? <p className="error">{inputError}</p> : undefined}
+      {inputError ? <p className={styles.error}>{inputError}</p> : undefined}
     </div>
   );
 }

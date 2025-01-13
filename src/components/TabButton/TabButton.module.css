@@ -1,0 +1,23 @@
+.tabButton {
+  list-style: none;
+  border-radius: 0;
+  border: none;
+  border-bottom: 2px solid black;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: transparent;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  white-space: nowrap;
+}
+
+.tabButton:hover {
+  border-color: #646cff;
+}
+
+.tabButton.active {
+  border-color: #646cff;
+}
