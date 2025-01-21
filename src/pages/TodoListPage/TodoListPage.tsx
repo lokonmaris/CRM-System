@@ -12,15 +12,13 @@ export default function TodoListPage() {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState();
   const [activeTab, setActiveTab] = useState("all");
-  const [todoInfo, setTodoInfo] = useState();
+  const [todoInfo, setTodoInfo] = useState({});
 
   const updateData = async (status) => {
     try {
       const resData = await fetchTodos(status);
       setTodoList(resData.data);
       setTodoInfo(resData.info);
-      console.log(todoInfo);
-      
     } catch (error) {
       setError({ message: error.message || "Не удалось загрузить данные" });
     }

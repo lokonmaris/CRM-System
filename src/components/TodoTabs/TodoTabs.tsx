@@ -12,10 +12,6 @@ export default function TodoTabs({
     setActiveTab(selectedButton);
   }
 
-  if (!todoInfo) {
-    return <p className={styles.filterLoading}>Загрузка данных...</p>;
-  }
-
   return (
     <menu className={styles.filterMenu}>
       <TabButton
