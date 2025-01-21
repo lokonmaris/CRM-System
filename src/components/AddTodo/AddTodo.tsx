@@ -1,23 +1,15 @@
 import { useState } from "react";
-import { addTodo, fetchTodos } from "../../http.js";
+import { addTodo } from "../../http.js";
 import styles from "./AddTodo.module.css";
 
-export default function AddTodo({
-  setTodoList,
-  setAllTodos,
-  setError,
-  status,
-}) {
+export default function AddTodo({ setError, status, updateData }) {
   const [todoTitle, setTodoTitle] = useState("");
   const [inputError, setInputError] = useState("");
 
   async function handleAddTodo(newTodoTitle) {
     try {
       await addTodo(newTodoTitle);
-      const data = await fetchTodos(status);
-      const allTasks = await fetchTodos("all");
-      setTodoList(data);
-      setAllTodos(allTasks);
+      await updateData(status);
     } catch (error) {
       setError({ message: error.message || "Не удалось добавить задачу" });
     }

@@ -6,7 +6,8 @@ export default function Todo({
   onDeleteTodo,
   onEditTodo,
   onUpdateStatus,
-  activeTab,
+  updateData,
+  status,
 }) {
   const [isEdit, setIsEdit] = useState(false);
   const [editTitle, setEditTitle] = useState("");
@@ -18,7 +19,7 @@ export default function Todo({
     setEditTitle(title);
   };
 
-  const handleSave = (id) => {
+  const handleSave = async (id) => {
     if (editTitle.length < 2) {
       setEditError("Минимальная длина - 2 символа");
       return;
@@ -30,6 +31,7 @@ export default function Todo({
     }
 
     onEditTodo(id, editTitle);
+    await updateData(status);
     setIsEdit(false);
     setEditTitle("");
   };
@@ -84,7 +86,7 @@ export default function Todo({
             <button onClick={() => handleEdit(todo.title)}>
               <i className="fas fa-pencil-alt"></i>
             </button>
-            <button onClick={() => onDeleteTodo(todo.id, activeTab)}>
+            <button onClick={() => onDeleteTodo(todo.id)}>
               <i className="fas fa-trash-alt"></i>
             </button>
           </div>

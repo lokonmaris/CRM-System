@@ -1,38 +1,12 @@
-import { useEffect } from "react";
 import Todo from "../Todo/Todo.tsx";
-import { fetchTodos, updateTodo, deleteTodo } from "../../http.js";
+import { updateTodo, deleteTodo } from "../../http.js";
 import styles from "./TodoList.module.css";
 
-export default function TodoList({
-  todoList,
-  setTodoList,
-  setAllTodos,
-  setError,
-  status,
-  activeTab,
-}) {
-  useEffect(() => {
-    async function fetchTodoList(status) {
-      try {
-        const data = await fetchTodos(status);
-        const allTasks = await fetchTodos("all");
-        setTodoList(data);
-        setAllTodos(allTasks);
-      } catch (error) {
-        setError({ message: error.message || "Не удалось получить данные" });
-      }
-    }
-
-    fetchTodoList(status);
-  }, [status]);
-
-  async function handleDeleteTodo(id, currentStatus) {
+export default function TodoList({ todoList, setError, status, updateData }) {
+  async function handleDeleteTodo(id) {
     try {
       await deleteTodo(id);
-      const data = await fetchTodos(currentStatus);
-      const allTasks = await fetchTodos("all");
-      setTodoList(data);
-      setAllTodos(allTasks);
+      updateData(status);
     } catch (error) {
       setError({ message: error.message || "Не удалось удалить задачу" });
     }
@@ -41,10 +15,7 @@ export default function TodoList({
   async function handleEditTodo(id, title) {
     try {
       await updateTodo(id, { title });
-      const data = await fetchTodos(status);
-      const allTasks = await fetchTodos("all");
-      setTodoList(data);
-      setAllTodos(allTasks);
+      await updateData(status);
     } catch (error) {
       setError({ message: error.message || "Не удалось редактировать задачу" });
     }
@@ -53,10 +24,7 @@ export default function TodoList({
   async function handleUpdateStatus(id, isDone) {
     try {
       await updateTodo(id, { isDone });
-      const data = await fetchTodos(status);
-      const allTasks = await fetchTodos("all");
-      setTodoList(data);
-      setAllTodos(allTasks);
+      await updateData(status);
     } catch (error) {
       setError({ message: error.message || "Не удалось обновить задачу" });
     }
@@ -72,7 +40,8 @@ export default function TodoList({
             onUpdateStatus={handleUpdateStatus}
             onDeleteTodo={handleDeleteTodo}
             onEditTodo={handleEditTodo}
-            activeTab={activeTab}
+            updateData={updateData}
+            status={status}
           />
         ))}
       </ol>

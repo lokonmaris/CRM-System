@@ -8,7 +8,7 @@ export async function fetchTodos(status) {
     throw new Error("Ошибка при просмотре списка задач");
   }
 
-  return resData.data;
+  return resData;
 }
 
 export async function addTodo(title) {

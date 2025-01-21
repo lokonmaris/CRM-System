@@ -6,3 +6,7 @@
   list-style-type: none;
   justify-content: center;
 }
+
+.filterLoading {
+  color: #646cff;
+}
