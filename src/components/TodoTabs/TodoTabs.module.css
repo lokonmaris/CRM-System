@@ -1,0 +1,12 @@
+.filterMenu {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2.2rem;
+  list-style-type: none;
+  justify-content: center;
+}
+
+.filterLoading {
+  color: #646cff;
+}
